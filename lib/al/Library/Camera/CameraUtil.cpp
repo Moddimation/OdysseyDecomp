@@ -1,6 +1,7 @@
 #include "Library/Camera/CameraUtil.h"
 
 #include "Library/Camera/CameraDirector.h"
+#include "Library/Camera/CameraPoseUpdater.h"
 #include "Library/Camera/CameraViewInfo.h"
 #include "Library/Camera/IUseCamera.h"
 #include "Library/Camera/SceneCameraInfo.h"
@@ -9,8 +10,12 @@
 
 namespace al {
 
+inline CameraDirector* getCameraDirector(const IUseCamera* user) {
+    return user->getCameraDirector();
+}
+
 SceneCameraInfo* getSceneCameraInfo(const IUseCamera* user) {
-    return user->getCameraDirector()->getSceneCameraInfo();
+    return getCameraDirector(user)->getSceneCameraInfo();
 }
 
 s32 getViewNumMax(const IUseCamera* user) {
@@ -142,8 +147,7 @@ f32 getFar(const SceneCameraInfo* info, s32 viewIdx) {
 }
 
 f32 calcCameraDistance(const IUseCamera* user, s32 viewIdx) {
-    sead::Vector3f diff = getCameraPos(getSceneCameraInfo(user), viewIdx) -
-                          getCameraAt(getSceneCameraInfo(user), viewIdx);
+    sead::Vector3f diff = getCameraPos(user, viewIdx) - getCameraAt(user, viewIdx);
 
     return diff.length();
 }
@@ -156,7 +160,7 @@ f32 calcFovxDegree(const IUseCamera* user, s32 viewIdx) {
 
 f32 calcCurrentFovyRate(const IUseCamera* user, s32 viewIdx) {
     f32 fovy = getFovyDegree(user, viewIdx);
-    f32 fovy2 = user->getCameraDirector()->getSceneFovyDegree();
+    f32 fovy2 = getCameraDirector(user)->getSceneFovyDegree();
 
     if (isNearZero(fovy, 0.001f) || isNearZero(fovy2, 0.001f))
         return 0;
@@ -164,4 +168,18 @@ f32 calcCurrentFovyRate(const IUseCamera* user, s32 viewIdx) {
     return fovy / fovy2;
 }
 
+void calcCameraFront(sead::Vector3f* vec, const IUseCamera* user, s32 viewIdx) {
+    vec->set(getCameraAt(user, viewIdx) - getCameraPos(user, viewIdx));
+    normalize(vec);
+}
+
+void setNearClipDistance(const IUseCamera* user, f32 distance, s32 updaterIdx) {
+    getCameraDirector(user)->getPoseUpdater(updaterIdx)->setNearClipDistance(distance);
+}
+
+void setFarClipDistance(const IUseCamera* user, f32 distance, s32 updaterIdx) {
+    getCameraDirector(user)->getPoseUpdater(updaterIdx)->setFarClipDistance(distance);
+}
+
+void setCurrentCameraPose(CameraPoseInfo* poseInfo, const IUseCamera* user) {}
 }  // namespace al
