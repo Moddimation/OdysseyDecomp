@@ -5,22 +5,13 @@
 
 namespace al {
 
-class CameraViewFlag {
-public:
-    CameraViewFlag();
-
-    void resetAllFlag();
-
-private:
-    bool _0 = false;
-};
-
-class Projection;
+class CameraViewFlag;
 struct OrthoProjectionInfo;
+class Projection;
 
 class CameraViewInfo {
 public:
-    CameraViewInfo(s32 num, const sead::LookAtCamera& lookAtCam, const Projection& projection,
+    CameraViewInfo(s32 index, const sead::LookAtCamera& lookAtCam, const Projection& projection,
                    const CameraViewFlag& flag, const OrthoProjectionInfo& orthoProjectionInfo);
 
     const sead::Projection& getProjectionSead() const;
@@ -32,7 +23,7 @@ public:
 
     s32 getIndex() const { return mIndex; }
 
-    bool getIsValid() const { return mIsValid; }
+    bool isValid() const { return mIsValid; }
 
     const sead::LookAtCamera& getLookAtCam() const { return mLookAtCam; }
 

@@ -4,18 +4,10 @@
 
 namespace al {
 
-// CameraViewFlag
-CameraViewFlag::CameraViewFlag() {}
-
-void CameraViewFlag::resetAllFlag() {
-    _0 = false;
-}
-
-// CameraViewInfo
-CameraViewInfo::CameraViewInfo(s32 num, const sead::LookAtCamera& lookAtCam,
+CameraViewInfo::CameraViewInfo(s32 index, const sead::LookAtCamera& lookAtCam,
                                const Projection& projection, const CameraViewFlag& flag,
                                const OrthoProjectionInfo& orthoProjectionInfo)
-    : mIndex(num), mLookAtCam(lookAtCam), mProjection(projection), mCamViewFlag(flag),
+    : mIndex(index), mLookAtCam(lookAtCam), mProjection(projection), mCamViewFlag(flag),
       mOrthoProjectionInfo(orthoProjectionInfo) {}
 
 const sead::Projection& CameraViewInfo::getProjectionSead() const {

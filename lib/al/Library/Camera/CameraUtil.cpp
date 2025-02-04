@@ -31,7 +31,7 @@ bool isValidView(const IUseCamera* user, s32 viewIdx) {
 }
 
 bool isValidView(const SceneCameraInfo* info, s32 viewIdx) {
-    return info->getViewAt(viewIdx)->getIsValid();
+    return info->getViewAt(viewIdx)->isValid();
 }
 
 const char* getViewName(const IUseCamera* user, s32 viewIdx) {
