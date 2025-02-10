@@ -1,6 +1,7 @@
 #include "Library/Camera/CameraUtil.h"
 
 #include "Library/Camera/CameraDirector.h"
+#include "Library/Camera/CameraPoseUpdater.h"
 #include "Library/Camera/CameraViewInfo.h"
 #include "Library/Camera/IUseCamera.h"
 #include "Library/Camera/SceneCameraInfo.h"
@@ -166,4 +167,19 @@ f32 calcCurrentFovyRate(const IUseCamera* user, s32 viewIdx) {
 
     return fovy / fovy2;
 }
+
+void calcCameraFront(sead::Vector3f* vec, const IUseCamera* user, s32 viewIdx) {
+    vec->set(getCameraAt(user, viewIdx) - getCameraPos(user, viewIdx));
+    normalize(vec);
+}
+
+void setNearClipDistance(const IUseCamera* user, f32 distance, s32 updaterIdx) {
+    getCameraDirector(user)->getPoseUpdater(updaterIdx)->setNearClipDistance(distance);
+}
+
+void setFarClipDistance(const IUseCamera* user, f32 distance, s32 updaterIdx) {
+    getCameraDirector(user)->getPoseUpdater(updaterIdx)->setFarClipDistance(distance);
+}
+
+void setCurrentCameraPose(CameraPoseInfo* poseInfo, const IUseCamera* user) {}
 }  // namespace al
