@@ -15,7 +15,7 @@ public:
         Priority_Capture = 4,
         Priority_Object = 5,
         Priority_ForceArea = 6,
-        // Priority_EntranceAll = 7,
+        Priority_Unknown = 7,
         Priority_SafetyPointRecovery = 8,
         Priority_Player = 9,
         Priority_DemoTalk = 10,

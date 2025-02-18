@@ -11,7 +11,7 @@ class CameraAnimResult;
 
 namespace al {
 
-class CameraStartInfo;
+struct CameraStartInfo;
 class CameraPoser;
 class Resource;
 
