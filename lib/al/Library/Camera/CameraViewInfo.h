@@ -39,4 +39,6 @@ private:
     const CameraViewFlag& mCamViewFlag;
     const OrthoProjectionInfo& mOrthoProjectionInfo;
 };
+
+static_assert(sizeof(CameraViewInfo) == 0x28);
 }  // namespace al

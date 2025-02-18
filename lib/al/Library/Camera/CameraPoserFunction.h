@@ -7,9 +7,9 @@
 #include <math/seadVector.h>
 
 namespace al {
+struct CameraObjectRequestInfo;
 class CameraPoser;
 struct CameraStartInfo;
-class CameraObjectRequestInfo;
 class IUseCollision;
 class PlacementInfo;
 class Projection;

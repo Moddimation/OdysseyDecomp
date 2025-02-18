@@ -85,15 +85,15 @@ void CameraVerticalAbsorber::update() {
     alCameraPoserFunction::calcTargetGravity(&gravity, mCameraPoser);
     mTargetInterp = mCameraPoser->getPosition() - mPrevTargetTrans;
     parallelizeVec(&mTargetInterp, gravity, mTargetInterp);
-    mLookAtCamera.getPos() = mCameraPoser->getPosition();
-    mLookAtCamera.getAt() = mCameraPoser->getTargetTrans();
-    mLookAtCamera.getUp() = mCameraPoser->getCameraUp();
+    mLookAtCamera.setPos(mCameraPoser->getPosition());
+    mLookAtCamera.setAt(mCameraPoser->getTargetTrans());
+    mLookAtCamera.setUp(mCameraPoser->getCameraUp());
     if (mLookAtCamera.getUp().length() > 0.0f)
-        mLookAtCamera.getUp().normalize();
+        mLookAtCamera.normalizeUp();
     if (!unk_unusedBool && !mIsInvalidated) {
-        mLookAtCamera.getAt() -= mTargetInterp;
+        mLookAtCamera.addAt(-mTargetInterp);
         if (!mIsNoCameraPosAbsorb)
-            mLookAtCamera.getPos() -= mTargetInterp;
+            mLookAtCamera.addPos(-mTargetInterp);
     }
     mLookAtCamera.doUpdateMatrix(&mLookAtCamera.getMatrix());
     mProjection.set(alCameraPoserFunction::getNear(mCameraPoser),
